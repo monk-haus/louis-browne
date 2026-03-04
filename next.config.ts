@@ -9,9 +9,7 @@ try {
     initOpenNextCloudflareForDev?: () => void;
   };
   adapter.initOpenNextCloudflareForDev?.();
-} catch {
-  // Adapter is optional until cloudflare dependencies are installed.
-}
+} catch {}
 
 const nextConfig: NextConfig = {
   images: {
