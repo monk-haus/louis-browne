@@ -8,28 +8,28 @@ export type Project = {
 };
 
 export const projects: Project[] = [
-  { id: "101", title: "Holly NYC", location: "New York, NY", year: "2024", image: "/Holly_NYC.jpeg" },
+  { id: "101", title: "Holly NYC", location: "New York, NY", year: "2024", image: "/Holly_NYC.webp" },
   {
     id: "102",
     title: "Adidas",
     location: "Herzogenaurach, Germany",
     year: "2023",
-    image: "/adidas.png",
-    video: "/adidas.mp4",
+    image: "/adidas.webp",
+    video: "/adidas.webm",
   },
-  { id: "103", title: "Bulleit", location: "Louisville, KY", year: "2022", image: "/bulleit.png" },
-  { id: "104", title: "Calvin Klein", location: "New York, NY", year: "2024", image: "/calvin-klein.png" },
-  { id: "105", title: "Carlita", location: "Ibiza, Spain", year: "2023", image: "/carlita.jpeg" },
-  { id: "106", title: "Dior", location: "Paris, France", year: "2022", image: "/dior.jpg", video: "/dior.mp4" },
-  { id: "107", title: "Gucci", location: "Milan, Italy", year: "2024", image: "/gucci.jpg" },
-  { id: "108", title: "New Balance", location: "Boston, MA", year: "2023", image: "/new-balance.jpeg" },
-  { id: "109", title: "Nike", location: "Portland, OR", year: "2021", image: "/nike.png", video: "/nike.mp4" },
+  { id: "103", title: "Bulleit", location: "Louisville, KY", year: "2022", image: "/bulleit.webp" },
+  { id: "104", title: "Calvin Klein", location: "New York, NY", year: "2024", image: "/calvin-klein.webp" },
+  { id: "105", title: "Carlita", location: "Ibiza, Spain", year: "2023", image: "/carlita.webp" },
+  { id: "106", title: "Dior", location: "Paris, France", year: "2022", image: "/dior.webp", video: "/dior.webm" },
+  { id: "107", title: "Gucci", location: "Milan, Italy", year: "2024", image: "/gucci.webp" },
+  { id: "108", title: "New Balance", location: "Boston, MA", year: "2023", image: "/new-balance.webp" },
+  { id: "109", title: "Nike", location: "Portland, OR", year: "2021", image: "/nike.webp", video: "/nike.webm" },
   {
     id: "110",
     title: "Olivia Rodrigo",
     location: "Los Angeles, CA",
     year: "2024",
-    image: "/olivia-rodrigo.jpeg",
+    image: "/olivia-rodrigo.webp",
   },
 ];
 
