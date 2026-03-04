@@ -1,5 +1,6 @@
 "use client";
 
+import Lenis from "lenis";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { desktopGroupSequence, mobileGroupSequence, projects, thumbnailGroups } from "./home-data";
 
@@ -44,6 +45,8 @@ export default function HomeClient() {
   const snapTimeoutRef = useRef<number | undefined>(undefined);
   const animationFrameRef = useRef<number | undefined>(undefined);
   const mobileUserScrolledRef = useRef(true);
+  const lenisRef = useRef<Lenis | null>(null);
+  const lenisRafRef = useRef<number | undefined>(undefined);
 
   const desktopProjects = useMemo(() => [...projects].reverse(), []);
 
@@ -167,11 +170,19 @@ export default function HomeClient() {
     if (scroll < oldScrollRef.current) {
       if (scroll <= loopMinScroll) {
         scroll = sectionHeight * centerGroup + (oldScrollRef.current - scroll);
-        thumbnails.scrollTop = scroll;
+        if (lenisRef.current) {
+          lenisRef.current.scrollTo(scroll, { immediate: true });
+        } else {
+          thumbnails.scrollTop = scroll;
+        }
       }
     } else if (scroll >= loopMaxScroll) {
       scroll = sectionHeight * centerGroup + (oldScrollRef.current - scroll);
-      thumbnails.scrollTop = scroll;
+      if (lenisRef.current) {
+        lenisRef.current.scrollTo(scroll, { immediate: true });
+      } else {
+        thumbnails.scrollTop = scroll;
+      }
     }
 
     oldScrollRef.current = scroll;
@@ -190,6 +201,22 @@ export default function HomeClient() {
       }
 
       cancelScrollAnimation();
+
+      const lenis = lenisRef.current;
+      if (lenis) {
+        if (duration <= 0) {
+          lenis.scrollTo(target, { immediate: true });
+          updateScroll();
+          onComplete?.();
+        } else {
+          lenis.scrollTo(target, {
+            duration: duration / 1000,
+            easing: easeOutCubic,
+            onComplete: () => onComplete?.(),
+          });
+        }
+        return;
+      }
 
       if (duration <= 0) {
         thumbnails.scrollTop = target;
@@ -303,7 +330,11 @@ export default function HomeClient() {
       oldScrollRef.current = target;
 
       if (transitionTime === 0) {
-        thumbnails.scrollTop = target;
+        if (lenisRef.current) {
+          lenisRef.current.scrollTo(target, { immediate: true });
+        } else {
+          thumbnails.scrollTop = target;
+        }
         updateScroll();
         return;
       }
@@ -343,6 +374,24 @@ export default function HomeClient() {
 
     const initTimeout = window.setTimeout(initialize, 0);
 
+    const lenis = new Lenis({
+      wrapper: thumbnails,
+      content: thumbnailsInnerRef.current!,
+    });
+    lenisRef.current = lenis;
+
+    lenis.on("scroll", () => {
+      if (window.innerWidth <= DESKTOP_BREAKPOINT) return;
+      updateScroll();
+      snapToClosestThumbnail();
+    });
+
+    const lenisRaf = (time: number) => {
+      lenis.raf(time);
+      lenisRafRef.current = window.requestAnimationFrame(lenisRaf);
+    };
+    lenisRafRef.current = window.requestAnimationFrame(lenisRaf);
+
     const onResize = () => {
       updateResponsiveStyles();
       refreshMetrics();
@@ -350,18 +399,6 @@ export default function HomeClient() {
       const savedIndex = Number(sessionStorage.getItem("lastProjectClicked") ?? 0);
       sliderPosition(savedIndex, 0);
       updateScroll();
-    };
-
-    const onWheel = (event: WheelEvent) => {
-      if (window.innerWidth <= DESKTOP_BREAKPOINT) {
-        return;
-      }
-
-      event.preventDefault();
-      cancelScrollAnimation();
-      thumbnails.scrollTop += event.deltaY;
-      updateScroll();
-      snapToClosestThumbnail();
     };
 
     const onMobileScroll = () => {
@@ -388,15 +425,20 @@ export default function HomeClient() {
     };
 
     window.addEventListener("resize", onResize);
-    home.addEventListener("wheel", onWheel, { passive: false });
     thumbnails.addEventListener("scroll", onMobileScroll);
     thumbnails.addEventListener("touchmove", onTouchMove, { passive: true });
 
     return () => {
       window.removeEventListener("resize", onResize);
-      home.removeEventListener("wheel", onWheel);
       thumbnails.removeEventListener("scroll", onMobileScroll);
       thumbnails.removeEventListener("touchmove", onTouchMove);
+
+      lenis.destroy();
+      lenisRef.current = null;
+      if (lenisRafRef.current !== undefined) {
+        window.cancelAnimationFrame(lenisRafRef.current);
+        lenisRafRef.current = undefined;
+      }
 
       window.clearTimeout(initTimeout);
       clearSnapTimeout();
