@@ -1,0 +1,68 @@
+
+ ⛅️ wrangler 4.70.0
+───────────────────
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mBuild failed with 8 errors:[0m
+
+  [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./cloudflare/images.js"[0m
+  
+      _worker.js:2:61:
+  [37m      2 │ ...giImageRequest, handleImageRequest } from [32m"./cloudflare/images.js"[37m;
+          ╵                                              [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+  
+  
+  [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./cloudflare/init.js"[0m
+  
+      _worker.js:4:48:
+  [37m      4 │ ...rt { runWithCloudflareRequestContext } from [32m"./cloudflare/init.js"[37m;
+          ╵                                                [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+  
+  
+  [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./cloudflare/skew-protection.js"[0m
+  
+      _worker.js:6:47:
+  [37m      6 │ ...GetSkewProtectionResponse } from [32m"./cloudflare/skew-protection.js"[37m;
+          ╵                                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+  
+  
+  [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./middleware/handler.mjs"[0m
+  
+      _worker.js:8:45:
+  [37m      8 │ ...t { handler as middlewareHandler } from [32m"./middleware/handler.mjs"[37m;
+          ╵                                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+  
+  
+  [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./.build/durable-objects/queue.js"[0m
+  
+      _worker.js:10:31:
+  [37m      10 │ export { DOQueueHandler } from [32m"./.build/durable-objects/queue.js"[37m;
+           ╵                                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+  
+  
+  [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./.build/durable-objects/sharded-tag-cache.js"[0m
+  
+      _worker.js:12:34:
+  [37m      12 │ ...edTagCache } from [32m"./.build/durable-objects/sharded-tag-cache.js"[37m;
+           ╵                      [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+  
+  
+  [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./.build/durable-objects/bucket-cache-purge.js"[0m
+  
+      _worker.js:14:33:
+  [37m      14 │ ...achePurge } from [32m"./.build/durable-objects/bucket-cache-purge.js"[37m;
+           ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+  
+  
+  [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./server-functions/default/handler.mjs"[0m
+  
+      _worker.js:39:45:
+  [37m      39 │ ...andler } = await import([32m"./server-functions/default/handler.mjs"[37m);
+           ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+  
+  
+
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mFailed to build _worker.js.[0m
+
+
+🪵  Logs were written to "/Users/ziad/Library/Preferences/.wrangler/logs/wrangler-2026-03-04_00-16-41_791.log"
