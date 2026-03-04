@@ -573,7 +573,7 @@ export default function HomeClient() {
                   </picture>
                   {project.video ? (
                     <video className="video" muted loop playsInline preload="auto">
-                      <source src={project.video} type="video/mp4" />
+                      <source src={project.video} type="video/webm" />
                     </video>
                   ) : null}
                 </figure>
