@@ -468,15 +468,15 @@ export default function HomeClient() {
         </h1>
 
         <span className="info uppercase smallFontSize noselect">
-          <a href="#">Information</a>
+          <a href="/information">Information</a>
         </span>
 
         <span className="archive uppercase smallFontSize noselect">
-          <a href="#" className="motion">
+          <a href="/motion" className="motion">
             Motion
           </a>{" "}
           /{" "}
-          <a href="#" className="print">
+          <a href="/stills" className="print">
             Stills
           </a>
         </span>
