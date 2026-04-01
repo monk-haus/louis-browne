@@ -2,7 +2,7 @@
 
 import Lenis from "lenis";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { desktopGroupSequence, mobileGroupSequence, projects, thumbnailGroups } from "./home-data";
+import { desktopGroupSequence, mobileGroupSequence, thumbnailGroups, type Project } from "./home-data";
 
 type ActiveProject = { group: number; index: number } | null;
 
@@ -20,7 +20,7 @@ const SMALL_MOBILE_BREAKPOINT = 740;
 
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
-export default function HomeClient() {
+export default function HomeClient({ projects }: { projects: Project[] }) {
   const homeRef = useRef<HTMLElement>(null);
   const thumbnailsRef = useRef<HTMLDivElement>(null);
   const thumbnailsInnerRef = useRef<HTMLDivElement>(null);
@@ -460,10 +460,10 @@ export default function HomeClient() {
       <header className="slowTransition">
         <h1 className="logo uppercase smallFontSize noselect">
           <span className="desktop">
-            <a href="#">Louis Browne</a>
+            <a href="/">Louis Browne</a>
           </span>
           <span className="mobile">
-            <a href="#">LB</a>
+            <a href="/">LB</a>
           </span>
         </h1>
 
@@ -549,7 +549,7 @@ export default function HomeClient() {
               projects.map((project, index) => (
                 <figure
                   id={`projectThumbnail_${group}_${index}`}
-                  className={`projectThumbnail${project.video ? " video" : ""}`}
+                  className={`projectThumbnail${project.video || project.gif ? " video" : ""}`}
                   data-group={group}
                   data-index={index}
                   data-id={project.id}
@@ -575,6 +575,9 @@ export default function HomeClient() {
                     <video className="video" muted loop playsInline preload="auto">
                       <source src={project.video} type="video/webm" />
                     </video>
+                  ) : null}
+                  {project.gif ? (
+                    <img className="gif" src={project.gif} alt="" />
                   ) : null}
                 </figure>
               ))

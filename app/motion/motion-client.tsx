@@ -1,9 +1,9 @@
 "use client";
 
-import { motionProjects } from "../home-data";
+import { type MotionProject } from "../home-data";
 import { useMountEffect } from "../hooks/useMountEffect";
 
-export default function MotionClient() {
+export default function MotionClient({ projects }: { projects: MotionProject[] }) {
   useMountEffect(() => {
     document.body.classList.add("archive-opened");
     return () => {
@@ -50,7 +50,7 @@ export default function MotionClient() {
         </div>
 
         <div className="inner motion mediumFontSize archiveGrid">
-          {motionProjects.map((project) => (
+          {projects.map((project) => (
             <div key={project.id} className="grid-item noselect">
               <a href={`/motion/${project.id}`}>
                 {project.image ? (

@@ -1,12 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-import { stillsImages, type StillsImage } from "../home-data";
+import { type StillsImage } from "../home-data";
 import { useMountEffect } from "../hooks/useMountEffect";
 
 const MOBILE_BREAKPOINT = 1000;
 
-export default function StillsClient() {
+export default function StillsClient({ images }: { images: StillsImage[] }) {
   const overlayRef = useRef<HTMLDivElement>(null);
   const overlayImgRef = useRef<HTMLImageElement>(null);
   const overlayTextRef = useRef<HTMLDivElement>(null);
@@ -110,7 +110,7 @@ export default function StillsClient() {
         </div>
 
         <div className="inner print mediumFontSize archiveGrid">
-          {stillsImages.map((image, i) => (
+          {images.map((image, i) => (
             <div key={i} className="grid-item noselect">
               <a href="#" onClick={(e) => handleClick(e, image)}>
                 <picture className="transition show">

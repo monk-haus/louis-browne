@@ -706,7 +706,8 @@ body.scrolling .projectThumbnail {
     object-fit: cover;
 }
 
-.projectThumbnail video {
+.projectThumbnail video,
+.projectThumbnail img.gif {
     position: absolute;
     top: 0;
     left: 0;
@@ -724,7 +725,9 @@ body.scrolling .projectThumbnail {
 }
 
 .projectThumbnail.video:hover video,
-.projectThumbnail.video.clicked video {
+.projectThumbnail.video.clicked video,
+.projectThumbnail.video:hover img.gif,
+.projectThumbnail.video.clicked img.gif {
     display: block;
 }
 
@@ -744,7 +747,9 @@ body.scrolling .projectThumbnail {
 }
 
 .projectThumbnail.transitioning.video video,
-.projectThumbnail.video.clicked video {
+.projectThumbnail.video.clicked video,
+.projectThumbnail.transitioning.video img.gif,
+.projectThumbnail.video.clicked img.gif {
     display: block;
 }
 
@@ -1303,6 +1308,8 @@ picture.show {
 #information .inner {
     padding: 30px 85px 30px 146px;
     overflow: hidden;
+    position: relative;
+    min-height: 100%;
 }
 
 #information address {
@@ -1345,7 +1352,14 @@ picture.show {
     left: 635px;
 }
 
-#information .rrss {
+#information .block.rrss {
+    position: absolute;
+    right: 85px;
+    bottom: 30px;
+    left: auto;
+    top: auto;
+    width: auto;
+    float: none;
     margin-bottom: 0;
 }
 
@@ -2341,7 +2355,18 @@ picture.show {
 
     #information .block.representation,
     #information .block.correspondence {
+        left: 50px;
+        width: calc(100% - 50px);
+    }
+
+    #information .block.rrss {
+        position: relative;
+        right: auto;
+        bottom: auto;
         left: 0;
+        top: auto;
+        float: left;
+        width: 100%;
     }
 
     #information .block.correspondence .bigFontSize {
@@ -2463,6 +2488,7 @@ picture.show {
     #information .block.representation,
     #information .block.correspondence {
         left: 0;
+        width: 100%;
     }
 }
 

@@ -5,7 +5,21 @@ import { useMountEffect } from "../hooks/useMountEffect";
 
 const MOBILE_BREAKPOINT = 1000;
 
-export default function InfoClient() {
+type InfoData = {
+  titleLine1?: string;
+  titleLine2?: string;
+  representationLabel?: string;
+  representationLine1?: string;
+  representationLine2?: string;
+  bioBigLine1?: string;
+  bioBigLine2?: string;
+  bioText?: string[];
+  email?: string;
+  instagramUrl?: string;
+};
+
+export default function InfoClient({ data }: { data?: InfoData }) {
+  const d = data ?? {};
   const innerRef = useRef<HTMLDivElement>(null);
   const block0Ref = useRef<HTMLSpanElement>(null);
   const block1Ref = useRef<HTMLDivElement>(null);
@@ -84,53 +98,42 @@ export default function InfoClient() {
       <section id="information" className="section show slowTransition noscrollbar">
         <div className="inner" ref={innerRef}>
           <span ref={block0Ref} className="block bigFontSize title slowTransition animateBlock">
-            Studio of
+            {d.titleLine1 ?? "Studio of"}
             <br />
-            Louis Browne
+            {d.titleLine2 ?? "Louis Browne"}
           </span>
 
           <div ref={block1Ref} className="block representation slowTransition animateBlock">
-            <span className="smallFontSize uppercase">U.S. Representation</span>
+            <span className="smallFontSize uppercase">{d.representationLabel ?? "U.S. Representation"}</span>
             <span className="bigFontSize">
-              Stadium
+              {d.representationLine1 ?? "Stadium"}
               <br />
-              Creative Group
+              {d.representationLine2 ?? "Creative Group"}
             </span>
           </div>
 
           <div ref={block2Ref} className="block correspondence slowTransition animateBlock">
             <span className="smallFontSize uppercase">Bio</span>
             <span className="bigFontSize">
-              Born in London,
+              {d.bioBigLine1 ?? "Born in London,"}
               <br />
-              based in New York
+              {d.bioBigLine2 ?? "based in New York"}
             </span>
-            <span className="smallFontSize bioText">
-              Born in London, Louis Browne spent his teenage years chasing the music scene around
-              England. Playing in bands, and then shifting to photographing them instead, Louis has
-              worked with artists from Billie Eilish to Mumford &amp; Sons, Olivia Rodrigo to The
-              1975. Moving into commercial work, Louis has shot for Gucci, Delta and Calvin Klein,
-              alongside featuring in publications like British Vogue, Rolling Stone, Rollacoaster,
-              and Wonderland.
-            </span>
-            <span className="smallFontSize bioText">
-              When stills naturally grew into motion work, he threw himself head-first into directing
-              campaigns for Adidas, Bulleit, Dior, Nike, OpenAI and Vans that leaned upon his
-              mixed-media approach and choppy, youthful style.
-            </span>
-            <span className="smallFontSize bioText">
-              While Louis is now based in New York, he still calls Europe home. His most memorable
-              shoot to date was asking Mike Tyson to &apos;look more angry&apos; while standing
-              centimetres away from his left fist. He&apos;s grateful to still be with us today.
-            </span>
+            {(d.bioText ?? [
+              "Born in London, Louis Browne spent his teenage years chasing the music scene around England. Playing in bands, and then shifting to photographing them instead, Louis has worked with artists from Billie Eilish to Mumford & Sons, Olivia Rodrigo to The 1975. Moving into commercial work, Louis has shot for Gucci, Delta and Calvin Klein, alongside featuring in publications like British Vogue, Rolling Stone, Rollacoaster, and Wonderland.",
+              "When stills naturally grew into motion work, he threw himself head-first into directing campaigns for Adidas, Bulleit, Dior, Nike, OpenAI and Vans that leaned upon his mixed-media approach and choppy, youthful style.",
+              "While Louis is now based in New York, he still calls Europe home. His most memorable shoot to date was asking Mike Tyson to 'look more angry' while standing centimetres away from his left fist. He's grateful to still be with us today.",
+            ]).map((para, i) => (
+              <span key={i} className="smallFontSize bioText">{para}</span>
+            ))}
           </div>
 
           <div ref={block3Ref} className="block rrss slowTransition animateBlock">
             <span className="smallFontSize uppercase">Get in touch</span>
-            <a className="bigFontSize" href="mailto:browne.louis@gmail.com">
+            <a className="mediumFontSize" href={`mailto:${d.email ?? "browne.louis@gmail.com"}`}>
               Email
             </a>
-            <a className="bigFontSize" href="https://www.instagram.com/louis_browne/" target="_blank" rel="noreferrer">
+            <a className="mediumFontSize" href={d.instagramUrl ?? "https://www.instagram.com/louis_browne/"} target="_blank" rel="noreferrer">
               Instagram
             </a>
           </div>
