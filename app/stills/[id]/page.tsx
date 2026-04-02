@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   const projects = await getStillsProjects();
-  return projects.map((p) => ({ id: p.id }));
+  return projects.filter((p) => p.id).map((p) => ({ id: p.id }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
