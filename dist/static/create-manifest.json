@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-04-01T16:23:30.440Z",
+  "createdAt": "2026-04-02T10:32:53.300Z",
   "studioVersion": "5.18.0",
   "version": 3,
   "workspaces": [
@@ -13,7 +13,7 @@
       },
       "name": "louis-browne",
       "projectId": "26rs8n8l",
-      "schema": "fc03b759.create-schema.json",
+      "schema": "4a88c97a.create-schema.json",
       "title": "Louis Browne",
       "tools": "18aa3ca5.create-tools.json"
     }

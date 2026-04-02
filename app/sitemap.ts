@@ -1,14 +1,21 @@
 import type { MetadataRoute } from "next";
-import { getMotionProjects } from "../sanity/lib/queries";
+import { getMotionProjects, getStillsProjects } from "../sanity/lib/queries";
 
 const BASE_URL = "https://www.louisbrowne.co";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const motionProjects = await getMotionProjects();
+  const [motionProjects, stillsProjects] = await Promise.all([getMotionProjects(), getStillsProjects()]);
 
   const projectUrls: MetadataRoute.Sitemap = motionProjects.map((p) => ({
     url: `${BASE_URL}/motion/${p.id}`,
     lastModified: p.updatedAt ? new Date(p.updatedAt) : new Date("2024-01-01"),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  const stillsUrls: MetadataRoute.Sitemap = stillsProjects.map((p) => ({
+    url: `${BASE_URL}/stills/${p.id}`,
+    lastModified: new Date("2026-01-01"),
     changeFrequency: "monthly",
     priority: 0.7,
   }));
@@ -39,5 +46,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     ...projectUrls,
+    ...stillsUrls,
   ];
 }

@@ -25,6 +25,13 @@ export type StillsImage = {
   title: string;
 };
 
+export type StillsProject = {
+  id: string;
+  title: string;
+  image: string;
+  images?: string[];
+};
+
 export const desktopGroupSequence = [3, 2, 1, 0, 3, 2, 1, 0];
 export const mobileGroupSequence = [0, 1, 2, 3, 0, 1, 2, 3];
 export const thumbnailGroups = [0, 1, 2, 3];

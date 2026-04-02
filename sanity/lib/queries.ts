@@ -1,7 +1,7 @@
 import { groq } from "next-sanity";
 import { client } from "./client";
 import { urlFor } from "./image";
-import type { Project, MotionProject, StillsImage } from "../../app/home-data";
+import type { Project, MotionProject, StillsImage, StillsProject } from "../../app/home-data";
 
 export const homeProjectsQuery = groq`
   *[_type == "homeProject"] | order(order asc) {
@@ -38,9 +38,20 @@ export const motionProjectBySlugQuery = groq`
   }
 `;
 
-export const stillsQuery = groq`
+export const stillsProjectsQuery = groq`
   *[_type == "stillsCategory"] | order(order asc) {
     title,
+    "slug": slug.current,
+    thumbnail,
+    "firstImage": images[0]{..., "asset": asset->}
+  }
+`;
+
+export const stillsProjectBySlugQuery = groq`
+  *[_type == "stillsCategory" && slug.current == $slug][0] {
+    title,
+    "slug": slug.current,
+    thumbnail,
     "images": images[]{..., "asset": asset->}
   }
 `;
@@ -107,8 +118,35 @@ export async function getMotionProjectBySlug(slug: string): Promise<MotionProjec
   };
 }
 
+export async function getStillsProjects(): Promise<StillsProject[]> {
+  const raw = await client.fetch(stillsProjectsQuery);
+  return (raw as Record<string, unknown>[]).map((p) => {
+    const thumb = p.thumbnail ?? p.firstImage;
+    return {
+      id: p.slug as string,
+      title: p.title as string,
+      image: thumb ? urlFor(thumb as Parameters<typeof urlFor>[0]).width(800).format("webp").quality(80).url() : "",
+    };
+  });
+}
+
+export async function getStillsProjectBySlug(slug: string): Promise<StillsProject | null> {
+  const raw = await client.fetch(stillsProjectBySlugQuery, { slug });
+  if (!raw) return null;
+  return {
+    id: raw.slug as string,
+    title: raw.title as string,
+    image: raw.thumbnail ? urlFor(raw.thumbnail as Parameters<typeof urlFor>[0]).width(800).format("webp").quality(80).url() : "",
+    images: raw.images
+      ? (raw.images as Record<string, unknown>[]).map((img) =>
+          urlFor(img as Parameters<typeof urlFor>[0]).width(1600).format("webp").quality(85).url()
+        )
+      : [],
+  };
+}
+
 export async function getStillsImages(): Promise<StillsImage[]> {
-  const raw = await client.fetch(stillsQuery);
+  const raw = await client.fetch(stillsProjectsQuery);
   const result: StillsImage[] = [];
   for (const category of raw as { title: string; images: Record<string, unknown>[] }[]) {
     for (const img of category.images ?? []) {

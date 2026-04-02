@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import StillsClient from "./stills-client";
-import { getStillsImages } from "../../sanity/lib/queries";
+import { getStillsProjects } from "../../sanity/lib/queries";
 
 export const metadata: Metadata = {
   title: "Photography",
@@ -15,6 +15,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Stills() {
-  const images = await getStillsImages();
-  return <StillsClient images={images} />;
+  const projects = await getStillsProjects();
+  return <StillsClient projects={projects} />;
 }
