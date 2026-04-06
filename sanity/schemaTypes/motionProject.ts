@@ -29,6 +29,7 @@ export const motionProject = defineType({
       type: "text",
       rows: 3,
     }),
+    defineField({ name: "gif", title: "Thumbnail GIF", description: "Optional GIF shown on hover in the motion grid.", type: "file", options: { accept: "image/gif" } }),
     defineField({ name: "order", title: "Order", type: "number" }),
   ],
   orderings: [{ title: "Order", name: "orderAsc", by: [{ field: "order", direction: "asc" }] }],

@@ -51,7 +51,16 @@ export default function MotionClient({ projects }: { projects: MotionProject[] }
 
         <div className="inner motion mediumFontSize archiveGrid">
           {projects.map((project) => (
-            <div key={project.id} className="grid-item noselect">
+            <div key={project.id} className={`grid-item noselect${project.gif ? " video" : ""}`}
+              onMouseEnter={(e) => {
+                const video = e.currentTarget.querySelector("video");
+                if (video) void video.play().catch(() => {});
+              }}
+              onMouseLeave={(e) => {
+                const video = e.currentTarget.querySelector("video");
+                if (video) video.pause();
+              }}
+            >
               <a href={`/motion/${project.id}`}>
                 {project.image ? (
                   <picture className="transition show">
@@ -59,6 +68,9 @@ export default function MotionClient({ projects }: { projects: MotionProject[] }
                   </picture>
                 ) : (
                   <div className="thumbnailPlaceholder" />
+                )}
+                {project.gif && (
+                  <img className="gif" src={project.gif} alt="" />
                 )}
                 <div className="caption transition">
                   <span className="title">{project.title}</span>

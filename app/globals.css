@@ -1541,6 +1541,19 @@ picture.show {
     object-fit: cover;
 }
 
+#archive .inner.motion .grid-item img.gif {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+
+#archive .inner.motion .grid-item.video:hover img.gif {
+    display: block;
+}
+
 #archive .grid-sizer,
 #archive .grid-item {
     -webkit-width: calc(33.333% - 22px);
@@ -2321,6 +2334,7 @@ picture.show {
 
     #home .index .inner .legend,
     #closeProject,
+    .closeProject,
     #loading-cursor {
         display: none !important;
     }

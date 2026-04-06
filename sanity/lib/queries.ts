@@ -21,6 +21,7 @@ export const motionProjectsQuery = groq`
     title,
     "slug": slug.current,
     thumbnail,
+    "gif": gif.asset->url,
     vimeoIds,
     "images": images[]{..., "asset": asset->},
     "updatedAt": _updatedAt
@@ -90,6 +91,7 @@ export async function getMotionProjects(): Promise<MotionProject[]> {
     id: p.slug as string,
     title: p.title as string,
     image: p.thumbnail ? urlFor(p.thumbnail as Parameters<typeof urlFor>[0]).width(1200).format("webp").quality(80).url() : "",
+    gif: (p.gif as string | undefined),
     vimeoIds: (p.vimeoIds as string[] | undefined),
     images: p.images
       ? (p.images as Record<string, unknown>[]).map((img) =>

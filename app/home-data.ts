@@ -13,6 +13,7 @@ export type MotionProject = {
   id: string;
   title: string;
   image: string;
+  gif?: string;
   vimeoIds?: string[];
   images?: string[];
   description?: string;
