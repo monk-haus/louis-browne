@@ -1547,11 +1547,16 @@ picture.show {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: none;
+    display: block;
 }
 
-#archive .inner.motion .grid-item.video:hover img.gif {
-    display: block;
+#archive .inner.motion .grid-item:hover picture {
+    filter: none;
+    opacity: 1;
+}
+
+#archive .inner.motion .grid-item:hover .caption {
+    opacity: 0;
 }
 
 #archive .grid-sizer,

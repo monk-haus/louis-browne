@@ -1,0 +1,326 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ]
+          }
+        ],
+        "name": "name",
+        "type": "slug"
+      }
+    ],
+    "name": "media.tag",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "year",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "thumbnail",
+        "type": "image"
+      },
+      {
+        "options": {
+          "accept": "video/*"
+        },
+        "name": "video",
+        "type": "file",
+        "title": "Hover Video"
+      },
+      {
+        "options": {
+          "accept": "image/gif"
+        },
+        "name": "gif",
+        "type": "file",
+        "title": "Hover GIF"
+      },
+      {
+        "name": "order",
+        "type": "number"
+      }
+    ],
+    "name": "homeProject",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title"
+        },
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "thumbnail",
+        "type": "image"
+      },
+      {
+        "description": "Paste the Vimeo video ID or path (e.g. 1125595435 or louisbrowne23/nike). Add a second entry for projects with two videos.",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "vimeoIds",
+        "type": "array",
+        "title": "Vimeo Video IDs"
+      },
+      {
+        "description": "Images shown below the video on the project page.",
+        "of": [
+          {
+            "options": {
+              "hotspot": true,
+              "accept": "image/*,.tif,.tiff"
+            },
+            "type": "image"
+          }
+        ],
+        "name": "images",
+        "type": "array",
+        "title": "Still Images"
+      },
+      {
+        "rows": 3,
+        "description": "Used in search engine results and social sharing. ~150 characters.",
+        "name": "description",
+        "type": "text",
+        "title": "SEO Description"
+      },
+      {
+        "options": {
+          "accept": "image/gif"
+        },
+        "description": "Optional GIF shown on hover in the motion grid.",
+        "name": "gif",
+        "type": "file",
+        "title": "Thumbnail GIF"
+      },
+      {
+        "name": "order",
+        "type": "number"
+      }
+    ],
+    "name": "motionProject",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title"
+        },
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "thumbnail",
+        "type": "image"
+      },
+      {
+        "of": [
+          {
+            "options": {
+              "hotspot": true,
+              "accept": "image/*,.tif,.tiff"
+            },
+            "type": "image"
+          }
+        ],
+        "name": "images",
+        "type": "array"
+      },
+      {
+        "name": "order",
+        "type": "number"
+      }
+    ],
+    "name": "stillsCategory",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "initialValue": "Studio of",
+        "name": "titleLine1",
+        "type": "string"
+      },
+      {
+        "initialValue": "Louis Browne",
+        "name": "titleLine2",
+        "type": "string"
+      },
+      {
+        "initialValue": "U.S. Representation",
+        "name": "representationLabel",
+        "type": "string"
+      },
+      {
+        "initialValue": "Stadium",
+        "name": "representationLine1",
+        "type": "string"
+      },
+      {
+        "initialValue": "Creative Group",
+        "name": "representationLine2",
+        "type": "string"
+      },
+      {
+        "initialValue": "Born in London,",
+        "name": "bioBigLine1",
+        "type": "string",
+        "title": "Bio Headline Line 1"
+      },
+      {
+        "initialValue": "based in New York",
+        "name": "bioBigLine2",
+        "type": "string",
+        "title": "Bio Headline Line 2"
+      },
+      {
+        "description": "Each entry is one paragraph.",
+        "of": [
+          {
+            "rows": 4,
+            "type": "text"
+          }
+        ],
+        "name": "bioText",
+        "type": "array",
+        "title": "Bio Paragraphs"
+      },
+      {
+        "initialValue": "browne.louis@gmail.com",
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "initialValue": "https://www.instagram.com/louis_browne/",
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "name": "instagramUrl",
+        "type": "url",
+        "title": "Instagram URL"
+      }
+    ],
+    "name": "informationPage",
+    "type": "document"
+  }
+]

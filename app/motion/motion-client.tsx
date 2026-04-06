@@ -51,16 +51,7 @@ export default function MotionClient({ projects }: { projects: MotionProject[] }
 
         <div className="inner motion mediumFontSize archiveGrid">
           {projects.map((project) => (
-            <div key={project.id} className={`grid-item noselect${project.gif ? " video" : ""}`}
-              onMouseEnter={(e) => {
-                const video = e.currentTarget.querySelector("video");
-                if (video) void video.play().catch(() => {});
-              }}
-              onMouseLeave={(e) => {
-                const video = e.currentTarget.querySelector("video");
-                if (video) video.pause();
-              }}
-            >
+            <div key={project.id} className="grid-item noselect">
               <a href={`/motion/${project.id}`}>
                 {project.image ? (
                   <picture className="transition show">
