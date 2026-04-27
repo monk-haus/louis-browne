@@ -68,6 +68,12 @@
         "title": "Hover GIF"
       },
       {
+        "description": "Where clicking the thumbnail goes, e.g. /motion/nike-campaign",
+        "name": "link",
+        "type": "string",
+        "title": "Project Link"
+      },
+      {
         "name": "order",
         "type": "number"
       }

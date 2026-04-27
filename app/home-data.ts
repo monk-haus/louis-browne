@@ -6,6 +6,7 @@ export type Project = {
   image: string;
   video?: string;
   gif?: string;
+  link?: string;
   images?: string[];
 };
 

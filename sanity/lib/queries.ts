@@ -11,7 +11,8 @@ export const homeProjectsQuery = groq`
     year,
     thumbnail,
     "video": video.asset->url,
-    "gif": gif.asset->url
+    "gif": gif.asset->url,
+    link
   }
 `;
 
@@ -82,6 +83,7 @@ export async function getHomeProjects(): Promise<Project[]> {
     image: p.thumbnail ? urlFor(p.thumbnail as Parameters<typeof urlFor>[0]).width(1200).format("webp").quality(80).url() : "",
     video: (p.video as string | undefined),
     gif: (p.gif as string | undefined),
+    link: (p.link as string | undefined),
   }));
 }
 

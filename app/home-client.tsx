@@ -554,7 +554,13 @@ export default function HomeClient({ projects }: { projects: Project[] }) {
                   data-index={index}
                   data-id={project.id}
                   key={`thumb-${group}-${project.id}-${index}`}
-                  onClick={() => handleSelectProject(index)}
+                  onClick={() => {
+                    if (project.link) {
+                      window.location.href = project.link;
+                    } else {
+                      handleSelectProject(index);
+                    }
+                  }}
                   onMouseEnter={(event) => {
                     const video = event.currentTarget.querySelector("video");
                     if (video) {
