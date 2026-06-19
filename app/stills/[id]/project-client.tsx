@@ -1,7 +1,20 @@
 "use client";
 
-import { type StillsProject } from "../../home-data";
+import { type MediaItem, type StillsProject } from "../../home-data";
 import { useMountEffect } from "../../hooks/useMountEffect";
+
+function renderMedia(item: MediaItem, alt: string) {
+  if (item.kind === "video") {
+    return (
+      <video className="show" src={item.src} autoPlay loop muted playsInline />
+    );
+  }
+  return (
+    <picture className="show">
+      <img src={item.src} alt={alt} loading="lazy" />
+    </picture>
+  );
+}
 
 export default function StillsProjectClient({ project }: { project: StillsProject }) {
   useMountEffect(() => {
@@ -54,23 +67,19 @@ export default function StillsProjectClient({ project }: { project: StillsProjec
 
           {images.length > 0 && (
             <div className="content">
-              {images.map((src, i) => {
+              {images.map((item, i) => {
                 if (i % 2 !== 0) return null;
-                const nextSrc = images[i + 1];
+                const nextItem = images[i + 1];
 
-                if (nextSrc) {
+                if (nextItem) {
                   return (
                     <div key={i} className="row two_columns">
                       <div className="columns">
                         <div className="column">
-                          <picture className="show">
-                            <img src={src} alt={`${project.title} ${i + 1}`} loading="lazy" />
-                          </picture>
+                          {renderMedia(item, `${project.title} ${i + 1}`)}
                         </div>
                         <div className="column">
-                          <picture className="show">
-                            <img src={nextSrc} alt={`${project.title} ${i + 2}`} loading="lazy" />
-                          </picture>
+                          {renderMedia(nextItem, `${project.title} ${i + 2}`)}
                         </div>
                       </div>
                     </div>
@@ -79,9 +88,7 @@ export default function StillsProjectClient({ project }: { project: StillsProjec
 
                 return (
                   <div key={i} className="row full_width">
-                    <picture className="show">
-                      <img src={src} alt={`${project.title} ${i + 1}`} loading="lazy" />
-                    </picture>
+                    {renderMedia(item, `${project.title} ${i + 1}`)}
                   </div>
                 );
               })}

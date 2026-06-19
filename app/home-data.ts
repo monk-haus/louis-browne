@@ -1,3 +1,8 @@
+export type MediaItem = {
+  kind: "image" | "video";
+  src: string;
+};
+
 export type Project = {
   id: string;
   title: string;
@@ -16,7 +21,7 @@ export type MotionProject = {
   image: string;
   gif?: string;
   vimeoIds?: string[];
-  images?: string[];
+  images?: MediaItem[];
   description?: string;
   updatedAt?: string;
   createdAt?: string;
@@ -31,7 +36,7 @@ export type StillsProject = {
   id: string;
   title: string;
   image: string;
-  images?: string[];
+  images?: MediaItem[];
 };
 
 export const desktopGroupSequence = [3, 2, 1, 0, 3, 2, 1, 0];

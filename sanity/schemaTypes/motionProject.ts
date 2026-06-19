@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { BatchMediaInput } from "../components/BatchMediaInput";
 
 export const motionProject = defineType({
   name: "motionProject",
@@ -17,10 +18,14 @@ export const motionProject = defineType({
     }),
     defineField({
       name: "images",
-      title: "Still Images",
-      description: "Images shown below the video on the project page.",
+      title: "Media",
+      description: "Images, GIFs, and videos shown below the video on the project page. Use 'Upload files (batch)' to add many at once.",
       type: "array",
-      of: [{ type: "image", options: { hotspot: true, accept: "image/*,.tif,.tiff" } }],
+      of: [
+        { type: "image", options: { hotspot: true, accept: "image/*,.tif,.tiff" } },
+        { type: "file", title: "Video", options: { accept: "video/*" } },
+      ],
+      components: { input: BatchMediaInput },
     }),
     defineField({
       name: "description",

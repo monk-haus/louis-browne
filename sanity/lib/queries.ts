@@ -1,7 +1,22 @@
 import { groq } from "next-sanity";
 import { client } from "./client";
 import { urlFor } from "./image";
-import type { Project, MotionProject, StillsImage, StillsProject } from "../../app/home-data";
+import type { Project, MotionProject, MediaItem, StillsImage, StillsProject } from "../../app/home-data";
+
+function toMediaItems(raw: unknown): MediaItem[] | undefined {
+  if (!raw) return undefined;
+  return (raw as Record<string, unknown>[]).map((item) => {
+    const asset = item.asset as { url?: string; mimeType?: string } | undefined;
+    const isVideo = item._type === "file" || (asset?.mimeType?.startsWith("video/") ?? false);
+    if (isVideo) {
+      return { kind: "video", src: asset?.url ?? "" };
+    }
+    return {
+      kind: "image",
+      src: urlFor(item as Parameters<typeof urlFor>[0]).width(1600).format("webp").quality(85).url(),
+    };
+  });
+}
 
 export const homeProjectsQuery = groq`
   *[_type == "homeProject"] | order(order asc) {
@@ -24,7 +39,7 @@ export const motionProjectsQuery = groq`
     thumbnail,
     "gif": gif.asset->url,
     vimeoIds,
-    "images": images[]{..., "asset": asset->},
+    "images": images[]{_type, ..., "asset": asset->},
     "updatedAt": _updatedAt
   }
 `;
@@ -35,7 +50,7 @@ export const motionProjectBySlugQuery = groq`
     description,
     thumbnail,
     vimeoIds,
-    "images": images[]{..., "asset": asset->},
+    "images": images[]{_type, ..., "asset": asset->},
     "createdAt": _createdAt
   }
 `;
@@ -54,7 +69,7 @@ export const stillsProjectBySlugQuery = groq`
     title,
     "slug": slug.current,
     thumbnail,
-    "images": images[]{..., "asset": asset->}
+    "images": images[]{_type, ..., "asset": asset->}
   }
 `;
 
@@ -95,11 +110,7 @@ export async function getMotionProjects(): Promise<MotionProject[]> {
     image: p.thumbnail ? urlFor(p.thumbnail as Parameters<typeof urlFor>[0]).width(1200).format("webp").quality(80).url() : "",
     gif: (p.gif as string | undefined),
     vimeoIds: (p.vimeoIds as string[] | undefined),
-    images: p.images
-      ? (p.images as Record<string, unknown>[]).map((img) =>
-          urlFor(img as Parameters<typeof urlFor>[0]).width(1600).format("webp").quality(85).url()
-        )
-      : undefined,
+    images: toMediaItems(p.images),
     updatedAt: p.updatedAt as string | undefined,
   }));
 }
@@ -112,11 +123,7 @@ export async function getMotionProjectBySlug(slug: string): Promise<MotionProjec
     title: raw.title as string,
     image: raw.thumbnail ? urlFor(raw.thumbnail as Parameters<typeof urlFor>[0]).width(1200).format("webp").quality(80).url() : "",
     vimeoIds: raw.vimeoIds as string[] | undefined,
-    images: raw.images
-      ? (raw.images as Record<string, unknown>[]).map((img) =>
-          urlFor(img as Parameters<typeof urlFor>[0]).width(1600).format("webp").quality(85).url()
-        )
-      : undefined,
+    images: toMediaItems(raw.images),
     description: raw.description as string | undefined,
     createdAt: raw.createdAt as string | undefined,
   };
@@ -141,11 +148,7 @@ export async function getStillsProjectBySlug(slug: string): Promise<StillsProjec
     id: raw.slug as string,
     title: raw.title as string,
     image: raw.thumbnail ? urlFor(raw.thumbnail as Parameters<typeof urlFor>[0]).width(800).format("webp").quality(80).url() : "",
-    images: raw.images
-      ? (raw.images as Record<string, unknown>[]).map((img) =>
-          urlFor(img as Parameters<typeof urlFor>[0]).width(1600).format("webp").quality(85).url()
-        )
-      : [],
+    images: toMediaItems(raw.images) ?? [],
   };
 }
 

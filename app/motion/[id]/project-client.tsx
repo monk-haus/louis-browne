@@ -1,10 +1,23 @@
 "use client";
 
-import { type MotionProject } from "../../home-data";
+import { type MediaItem, type MotionProject } from "../../home-data";
 import { useMountEffect } from "../../hooks/useMountEffect";
 
 function vimeoEmbedUrl(id: string) {
   return `https://player.vimeo.com/video/${id}?autoplay=1&loop=1&muted=1&controls=1&title=0&byline=0&portrait=0`;
+}
+
+function renderMedia(item: MediaItem, alt: string) {
+  if (item.kind === "video") {
+    return (
+      <video className="show" src={item.src} autoPlay loop muted playsInline />
+    );
+  }
+  return (
+    <picture className="show">
+      <img src={item.src} alt={alt} loading="lazy" />
+    </picture>
+  );
 }
 
 export default function ProjectClient({ project }: { project: MotionProject }) {
@@ -86,23 +99,19 @@ export default function ProjectClient({ project }: { project: MotionProject }) {
                 </div>
               )}
 
-              {hasImages && project.images!.map((src, i) => {
+              {hasImages && project.images!.map((item, i) => {
                 if (i % 2 !== 0) return null;
-                const nextSrc = project.images![i + 1];
+                const nextItem = project.images![i + 1];
 
-                if (nextSrc) {
+                if (nextItem) {
                   return (
                     <div key={i} className="row two_columns">
                       <div className="columns">
                         <div className="column">
-                          <picture className="show">
-                            <img src={src} alt={`${project.title} ${i + 1}`} loading="lazy" />
-                          </picture>
+                          {renderMedia(item, `${project.title} ${i + 1}`)}
                         </div>
                         <div className="column">
-                          <picture className="show">
-                            <img src={nextSrc} alt={`${project.title} ${i + 2}`} loading="lazy" />
-                          </picture>
+                          {renderMedia(nextItem, `${project.title} ${i + 2}`)}
                         </div>
                       </div>
                     </div>
@@ -111,9 +120,7 @@ export default function ProjectClient({ project }: { project: MotionProject }) {
 
                 return (
                   <div key={i} className="row full_width">
-                    <picture className="show">
-                      <img src={src} alt={`${project.title} ${i + 1}`} loading="lazy" />
-                    </picture>
+                    {renderMedia(item, `${project.title} ${i + 1}`)}
                   </div>
                 );
               })}
